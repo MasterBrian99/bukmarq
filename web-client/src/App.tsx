@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useMemo } from "react";
-import axios, { AxiosContext } from "./utils/axios";
+import axios, { AxiosContext } from "@/utils/axios";
 
 const queryClient = new QueryClient({
   defaultOptions: {
