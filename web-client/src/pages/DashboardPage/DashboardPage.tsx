@@ -1,3 +1,5 @@
-const DashboardPage = () => <div>DashboardPage</div>;
+import { Box } from "@mantine/core";
+
+const DashboardPage = () => <Box h={"200vh"}>DashboardPage</Box>;
 
 export default DashboardPage;
