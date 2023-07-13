@@ -33,7 +33,7 @@ module.exports = {
         argsIgnorePattern: "^_",
       },
     ],
-    "arrow-body-style": ["error", "as-needed"],
+    "arrow-body-style": ["warn", "as-needed"],
     "react/self-closing-comp": ["error", { component: true, html: true }],
     // "jsx-a11y/label-has-for": "off",
     "jsx-a11y/label-has-associated-control": "off",

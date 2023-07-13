@@ -15,6 +15,7 @@ import { BsFillArchiveFill } from "react-icons/bs";
 import { BsFillTrashFill } from "react-icons/bs";
 import { BsTagsFill } from "react-icons/bs";
 import { useState } from "react";
+import CollectionItem from "./CollectionItem";
 
 const navList = [
   {
@@ -97,33 +98,7 @@ const MainLayout = () => {
           </Flex>
           <Box>
             <Box>
-              <Text size={"xs"}>Collections</Text>
-              <Box w={240}>
-                <NavLink
-                  label="First parent link"
-                  icon={<BsFillArchiveFill size="1rem" stroke={1.5} />}
-                  childrenOffset={28}
-                >
-                  <NavLink label="First child link" />
-                  <NavLink label="Second child link" />
-                  <NavLink label="Nested parent link" childrenOffset={28}>
-                    <NavLink label="First child link" />
-                    <NavLink label="Second child link" />
-                    <NavLink label="Third child link" />
-                  </NavLink>
-                </NavLink>
-
-                <NavLink
-                  label="Second parent link"
-                  icon={<BsFillArchiveFill size="1rem" stroke={1.5} />}
-                  childrenOffset={28}
-                  defaultOpened
-                >
-                  <NavLink label="First child link" />
-                  <NavLink label="Second child link" />
-                  <NavLink label="Third child link" />
-                </NavLink>
-              </Box>
+              <CollectionItem />
             </Box>
           </Box>
         </Navbar>
