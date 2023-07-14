@@ -1,8 +1,6 @@
-import EmojiPick from "@/components/layout/main/EmojiPick";
 import { Box, NavLink, Text } from "@mantine/core";
-import { Emoji } from "emoji-picker-react";
 import { BsFillArchiveFill } from "react-icons/bs";
-
+import { FcFolder } from "react-icons/fc";
 const CollectionItem = () => {
   const a = 1;
   return (
@@ -11,8 +9,8 @@ const CollectionItem = () => {
 
       <NavLink
         label="First parent link"
-        icon={<EmojiPick />}
         childrenOffset={28}
+        icon={<FcFolder size={"25"} />}
       >
         <NavLink label="First child link" />
         <NavLink label="Second child link" />

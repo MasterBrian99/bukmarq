@@ -5,6 +5,12 @@ const routes = {
       component: loadable(() => import("@/pages/DashboardPage/DashboardPage")),
       path: "",
     },
+    {
+      component: loadable(
+        () => import("@/pages/AllBookmarkPage/AllBookmarkPage")
+      ),
+      path: "all",
+    },
   ],
 };
 
