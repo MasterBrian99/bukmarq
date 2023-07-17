@@ -20,5 +20,4 @@ func Connect() {
 	}
 
 	fmt.Println("Connection Opened to Database")
-	fmt.Println("Database Migrated")
 }

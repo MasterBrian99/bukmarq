@@ -29,7 +29,7 @@ build-server:
 
 .PHONY: dev-server
 dev-server:
-	nodemon --exec go run main.go --signal SIGTERM
+	gow run .
 
 
 .PHONY: dev-client

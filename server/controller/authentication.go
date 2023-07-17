@@ -47,7 +47,7 @@ func Login(context *gin.Context) {
 	user, err := model.FindUserByUsername(input.Username)
 
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "User not found !"})
+		context.JSON(http.StatusNotFound, gin.H{"message": "User not found !"})
 		return
 	}
 

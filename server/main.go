@@ -18,6 +18,7 @@ import (
 )
 
 func main() {
+
 	loadDatabase()
 	serveApplication()
 
@@ -28,6 +29,7 @@ func loadDatabase() {
 	if err != nil {
 		log.Fatal("Database Migration Failed !")
 	}
+
 }
 
 func serveApplication() {
@@ -52,6 +54,7 @@ func serveApplication() {
 	collection := routes.Group("/collection")
 	{
 		collection.POST("", middleware.JWTAuthMiddleware(), controller.CreateCollection)
+		collection.GET("/tree", middleware.JWTAuthMiddleware(), controller.GetUserCollectionTree)
 		collection.GET("/parent/:id", middleware.JWTAuthMiddleware(), controller.GetAllCollectionByParentID)
 		collection.PUT("", middleware.JWTAuthMiddleware(), controller.UpdateCollection)
 	}

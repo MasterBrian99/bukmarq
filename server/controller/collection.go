@@ -54,6 +54,23 @@ func CreateCollection(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{"status": "created"})
 }
 
+func GetUserCollectionTree(context *gin.Context) {
+	user, err := helper.CurrentUser(context)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	tree, err := model.GetUserCollectionTree(user.ID)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	context.JSON(http.StatusOK, gin.H{"message": "success", "data": tree})
+
+	return
+
+}
+
 func GetAllCollectionByParentID(context *gin.Context) {
 	id := context.Param("id")
 
