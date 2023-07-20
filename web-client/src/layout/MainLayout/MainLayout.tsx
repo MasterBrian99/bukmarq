@@ -1,52 +1,50 @@
-import {
-  AppShell,
-  Box,
-  Button,
-  Flex,
-  Header,
-  NavLink,
-  Navbar,
-  Text,
-} from "@mantine/core";
-import { Outlet } from "react-router-dom";
+import { AppShell, Box, Flex, NavLink, Navbar } from "@mantine/core";
+import { Link, Outlet } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
 import { BsBookmarkStarFill } from "react-icons/bs";
 import { BsFillArchiveFill } from "react-icons/bs";
 import { BsFillTrashFill } from "react-icons/bs";
 import { BsTagsFill } from "react-icons/bs";
-import { useState } from "react";
 import CollectionItem from "./CollectionItem";
+import { navLinkActiveState } from "@/store/atom";
+import { useRecoilState } from "recoil";
 
 const navList = [
   {
     id: 1,
     label: "All bookmarks",
     icon: <BsBookmarkStarFill size="1rem" stroke={1.5} />,
+    path: "/all",
   },
   {
     id: 2,
     label: "Starred",
     icon: <AiFillStar size="1rem" stroke={1.5} />,
+    path: "/starred",
   },
   {
     id: 3,
     label: "Archived",
     icon: <BsFillArchiveFill size="1rem" stroke={1.5} />,
+    path: "/archived",
   },
   {
     id: 4,
     label: "Trash",
     icon: <BsFillTrashFill size="1rem" stroke={1.5} />,
+    path: "/trash",
   },
   {
     id: 5,
     label: "Untagged",
     icon: <BsTagsFill size="1rem" stroke={1.5} />,
+    path: "/untagged",
   },
 ];
 
 const MainLayout = () => {
-  const [currentActive, setCurrentActive] = useState(0);
+  const [navLink, setNavLink] = useRecoilState(navLinkActiveState);
+
   return (
     <AppShell
       padding="md"
@@ -64,36 +62,18 @@ const MainLayout = () => {
             },
           })}
         >
-          {/* Navbar content */}
           <Flex direction={"column"} mt={"lg"}>
-            {navList.map((el, i) => (
-              <Button
-                color="gray"
-                variant={currentActive == el.id ? "default" : "subtle"}
-                leftIcon={el.icon}
-                my={"2px"}
+            {navList.map((el) => (
+              <NavLink
                 key={el.id}
-                onClick={() => setCurrentActive(el.id)}
-                styles={(theme) => ({
-                  root: {
-                    border: 0,
-                    "&:active": {
-                      transform: "none",
-                    },
-                    color: "#000",
-                    fontWeight: currentActive == el.id ? "bold" : "normal",
-                    display: "flex",
-                    width: "100%",
-                    justifyContent: "space-between",
-                  },
-
-                  leftIcon: {
-                    marginRight: theme.spacing.md,
-                  },
-                })}
-              >
-                {el.label}
-              </Button>
+                label={el.label}
+                icon={el.icon}
+                onClick={() => setNavLink(el.path)}
+                variant={"filled"}
+                component={Link}
+                to={el.path}
+                active={navLink == el.path}
+              />
             ))}
           </Flex>
           <Box>
@@ -106,7 +86,8 @@ const MainLayout = () => {
       styles={(theme) => ({
         main: {
           backgroundColor:
-            theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white,
+            theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
+          padding: 0,
         },
       })}
     >

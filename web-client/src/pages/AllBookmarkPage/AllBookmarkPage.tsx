@@ -1,7 +1,7 @@
-import React from "react";
+import { Box } from "@mantine/core";
 
 const AllBookmarkPage = () => {
-  return <div>AllBookmarkPage</div>;
+  return <Box h={"200vh"}>AllBookmarkPage</Box>;
 };
 
 export default AllBookmarkPage;

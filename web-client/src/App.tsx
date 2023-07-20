@@ -13,6 +13,8 @@ import { useMemo } from "react";
 import axios, { AxiosContext } from "./utils/axios";
 import theme from "./theme/theme";
 import { useLocalStorage } from "@mantine/hooks";
+import { AuthProvider } from "react-auth-kit";
+import { Notifications } from "@mantine/notifications";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -57,9 +59,16 @@ const App = () => {
               withGlobalStyles
               withNormalizeCSS
             >
-              <BrowserRouter>
-                <Router />
-              </BrowserRouter>
+              <Notifications />
+              <AuthProvider
+                authType={"localstorage"}
+                authName={"_auth"}
+                cookieDomain={window.location.hostname}
+              >
+                <BrowserRouter>
+                  <Router />
+                </BrowserRouter>
+              </AuthProvider>
             </MantineProvider>
           </ColorSchemeProvider>
         </RecoilRoot>

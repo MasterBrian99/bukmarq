@@ -5,8 +5,8 @@ import {
 } from "@/api/collection";
 import { navLinkActiveState } from "@/store/atom";
 import { hasChildren } from "@/utils/util";
-import { Box, Button, NavLink, Text } from "@mantine/core";
-import React, { useState } from "react";
+import { Box, Button, Menu, NavLink, Text } from "@mantine/core";
+import React, { MouseEvent, useState } from "react";
 import { FcFolder } from "react-icons/fc";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -39,18 +39,47 @@ export default CollectionItem;
 const MenuItem = ({ item }: { item: CollectionChild }) => {
   const [navLink, setNavLink] = useRecoilState(navLinkActiveState);
   const navigate = useNavigate();
+  const [isShown, setIsShown] = useState(false);
 
+  // Show the custom context menu
+  const showContextMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    // Disable the default context menu
+    event.preventDefault();
+
+    setIsShown(false);
+
+    setIsShown(true);
+  };
   const Component = hasChildren(item?.children) ? MultiLevel : SingleLevel;
   return (
     <>
-      <Component
-        item={item}
-        onClick={() => {
-          setNavLink(`/collection/${String(item.id)}`);
-          navigate(`/collection/${String(item.id)}`);
-        }}
-        active={navLink == `/collection/${String(item.id)}`}
-      />
+      <Menu
+        shadow="md"
+        width={200}
+        opened={isShown}
+        onChange={setIsShown}
+        position={"right"}
+      >
+        <Menu.Target>
+          <Component
+            item={item}
+            onClick={() => {
+              setNavLink(`/collection/${String(item.id)}`);
+              navigate(`/collection/${String(item.id)}`);
+            }}
+            active={navLink == `/collection/${String(item.id)}`}
+            onContextMenu={showContextMenu}
+          />
+        </Menu.Target>
+
+        <Menu.Dropdown>
+          <Menu.Label>{item.name}</Menu.Label>
+
+          <Menu.Divider />
+
+          <Menu.Label>Danger zone</Menu.Label>
+        </Menu.Dropdown>
+      </Menu>
     </>
   );
 };
@@ -59,15 +88,16 @@ interface Pr {
   item: CollectionChild;
   onClick: () => void;
   active: boolean;
-  // eslint-disable-next-line no-unused-vars
+  onContextMenu: (_event: MouseEvent<HTMLButtonElement>) => void;
 }
 
-const SingleLevel = (props: Pr) => {
-  const { item, ...rest } = props;
+const SingleLevel = React.forwardRef<HTMLButtonElement, Pr>(
+  (props: Pr, ref) => {
+    const { item, ...rest } = props;
 
-  return (
-    <>
+    return (
       <NavLink
+        ref={ref}
         key={item.id}
         label={item.name}
         icon={<FcFolder size="1rem" stroke={1.5} />}
@@ -75,10 +105,12 @@ const SingleLevel = (props: Pr) => {
         {...rest}
         childrenOffset={28}
       />
-    </>
-  );
-};
-const MultiLevel = (props: Pr) => {
+    );
+  }
+);
+SingleLevel.displayName = "SingleLevel";
+
+const MultiLevel = React.forwardRef<HTMLButtonElement, Pr>((props: Pr, ref) => {
   const { item, ...rest } = props;
   const [open, setOpen] = useState(false);
   return (
@@ -103,6 +135,7 @@ const MultiLevel = (props: Pr) => {
       />
 
       <NavLink
+        ref={ref}
         opened={open}
         key={item.id}
         label={item.name}
@@ -120,4 +153,6 @@ const MultiLevel = (props: Pr) => {
       </NavLink>
     </React.Fragment>
   );
-};
+});
+
+MultiLevel.displayName = "MultiLevel";
