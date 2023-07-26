@@ -50,6 +50,8 @@ const MenuItem = ({ item }: { item: CollectionChild }) => {
           navigate(`/collection/${String(item.id)}`);
         }}
         active={navLink == `/collection/${String(item.id)}`}
+        defaultOpened
+        draggable
       />
     </>
   );
@@ -59,6 +61,8 @@ interface Pr {
   item: CollectionChild;
   onClick: () => void;
   active: boolean;
+    defaultOpened:boolean
+    draggable:boolean
   // eslint-disable-next-line no-unused-vars
 }
 
@@ -88,7 +92,6 @@ const MultiLevel = (props: Pr) => {
           position: "absolute",
           right: 0,
           zIndex: 20,
-          height: "100%",
         }}
         styles={() => ({
           root: {
@@ -103,6 +106,7 @@ const MultiLevel = (props: Pr) => {
       />
 
       <NavLink
+
         opened={open}
         key={item.id}
         label={item.name}
