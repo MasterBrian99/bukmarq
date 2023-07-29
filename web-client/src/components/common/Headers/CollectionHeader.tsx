@@ -7,7 +7,6 @@ const CollectionHeader = () => {
     const theme = useMantineTheme();
     return (
         <Box
-            mb={300}
             style={{
                 position: "fixed",
                 width: "calc(100% - 260px)",
@@ -18,6 +17,7 @@ const CollectionHeader = () => {
                 borderBottom: `${rem(1)} solid ${
                     theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
                 }`,
+                zIndex: 1
             }}
 
         >

@@ -52,6 +52,7 @@ const MenuItem = ({ item }: { item: CollectionChild }) => {
         active={navLink == `/collection/${String(item.id)}`}
         defaultOpened
         draggable
+
       />
     </>
   );
@@ -78,6 +79,7 @@ const SingleLevel = (props: Pr) => {
         variant={"filled"}
         {...rest}
         childrenOffset={28}
+
       />
     </>
   );
@@ -106,7 +108,6 @@ const MultiLevel = (props: Pr) => {
       />
 
       <NavLink
-
         opened={open}
         key={item.id}
         label={item.name}
