@@ -7,6 +7,7 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"log"
+	"os"
 )
 
 var Database *gorm.DB
@@ -20,7 +21,12 @@ func InitDB() {
 	case "postgres":
 		dialector = postgres.Open(connectionString)
 	case "sqlite":
-		dialector = sqlite.Open(connectionString)
+		var dbFilePath = config.GetEnvOrDefault("SQLITE_FOLDER_PATH", "bukmarq_db")
+		if err := os.MkdirAll(dbFilePath, os.ModePerm); err != nil {
+			log.Fatalf("Error creating  database folder: %v", err)
+		}
+		dbFilePath = fmt.Sprintf("%s/%s", dbFilePath, connectionString)
+		dialector = sqlite.Open(dbFilePath + "?_journal_mode=WAL")
 	}
 	var err error
 	Database, err = gorm.Open(dialector, &gorm.Config{})
@@ -29,7 +35,7 @@ func InitDB() {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
 
-	fmt.Println("Connection Opened to Database")
+	fmt.Println("Connection Opened")
 
 }
 

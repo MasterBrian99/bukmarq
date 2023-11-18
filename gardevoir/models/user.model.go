@@ -27,11 +27,12 @@ func MigrateUsers() {
 
 type User struct {
 	gorm.Model
-	Username  string `gorm:"type:varchar(255);unique;not null" json:"username"`
-	Email     string `gorm:"type:varchar(255);default:''" json:"email"`
-	FirstName string `gorm:"default:''"`
-	LastName  string `gorm:"default:''"`
-	Password  string `gorm:"not null"`
+	Username  string      `gorm:"type:varchar(255);unique;not null" json:"username"`
+	Email     string      `gorm:"type:varchar(255);default:''" json:"email"`
+	FirstName string      `gorm:"default:''"`
+	LastName  string      `gorm:"default:''"`
+	Password  string      `gorm:"not null"`
+	Workspace []Workspace `gorm:"foreignKey:user_id"`
 }
 
 type AuthenticationInput struct {
@@ -46,7 +47,21 @@ func (mod *BaseModel) CreateUser(body AuthenticationInput) error {
 		Username: body.Username,
 		Password: body.Password,
 	}
-	err := mod.Gorm.Create(&user).Error
+	workspace := Workspace{
+		Name:        "Personal",
+		Description: "personal items",
+	}
+	err := mod.Gorm.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Create(&user).Error; err != nil {
+			return err
+		}
+		workspace.UserID = user.ID
+		if err := tx.Create(&workspace).Error; err != nil {
+			return err
+		}
+
+		return nil
+	})
 	if err != nil {
 		return err
 	}

@@ -30,10 +30,10 @@ import (
 // @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
 	r := gin.Default()
-
 	database.InitDB()
 
 	models.MigrateUsers()
+	models.MigrateWorkspace()
 	controller.UsersController(r)
 	controller.AuthController(r)
 	controller.SwaggersController(r)

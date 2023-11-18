@@ -22,7 +22,7 @@ func UsersController(r *gin.Engine) *BaseController {
 }
 
 func (ctr *BaseController) UsersRoutes(r *gin.Engine) {
-	api := r.Group("/users")
+	api := r.Group("api/v1/users")
 	{
 
 		api.POST("/", func(ctx *gin.Context) {
@@ -32,6 +32,17 @@ func (ctr *BaseController) UsersRoutes(r *gin.Engine) {
 	}
 }
 
+// CreateUser godoc
+// @Summary      Create new user account and personal workspace
+// @Description  create new user account with username,password and optional email,first and last name
+// @Tags         user
+// @Accept       json
+// @Produce      json
+// @Param        data body models.AuthenticationInput true  "User Create"
+// @Success      200  {object}  helpers.Response
+// @Failure      500  {object}  helpers.Response
+// @Failure      409  {object}  helpers.Response
+// @Router       /api/v1/users [post]
 func createUser(ctx *gin.Context, ctr *BaseController) {
 	body, err := utils.GetBody[models.AuthenticationInput](ctx)
 	if err != nil {
