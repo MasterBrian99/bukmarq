@@ -24,11 +24,12 @@ func MigrateWorkspace() {
 
 type Workspace struct {
 	gorm.Model
-	Name        string `gorm:"type:varchar(255);not null" json:"name"`
-	Description string `gorm:"type:text;default:''" json:"description"`
-	UserID      uint   `gorm:"column:user_id"`
+	Name          string          `gorm:"type:varchar(255);not null" json:"name"`
+	Description   string          `gorm:"type:text;default:''" json:"description"`
+	WorkspaceUser []WorkspaceUser `gorm:"foreignKey:workspace_id"`
 }
 
 type WorkspaceCreateInput struct {
-	name string
+	Name        string `json:"name" binding:"required"`
+	Description string `json:"description" binding:"required"`
 }

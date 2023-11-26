@@ -18,5 +18,14 @@ func WorkspaceController(r *gin.Engine) *BaseController {
 }
 
 func (ctr *BaseController) WorkspaceRoutes(r *gin.Engine) {
+	api := r.Group("api/v1/workspace")
+	{
+		api.POST("/", func(ctx *gin.Context) {
+			createWorkspace(ctx, ctr)
+		})
+	}
+}
+
+func createWorkspace(ctx *gin.Context, ctr *BaseController) {
 
 }

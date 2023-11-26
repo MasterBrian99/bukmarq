@@ -34,6 +34,7 @@ func main() {
 
 	models.MigrateUsers()
 	models.MigrateWorkspace()
+	models.MigrateWorkspaceUser()
 	controller.UsersController(r)
 	controller.AuthController(r)
 	controller.SwaggersController(r)
