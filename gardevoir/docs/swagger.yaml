@@ -1,0 +1,144 @@
+basePath: /api/v1
+definitions:
+  helpers.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+  models.AuthenticationInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8080
+info:
+  contact:
+    email: pasindu@tuta.com
+    name: API Support
+    url: https://github.com/MasterBrian99/bukmarq
+  description: Server Implementation
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit/
+  termsOfService: https://github.com/MasterBrian99/bukmarq
+  title: Bukmarq Backend Server
+  version: 0.0.1
+paths:
+  /api/v1/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: login as a user with username and password.email field is not required
+      parameters:
+      - description: User Create
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.AuthenticationInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/helpers.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.Response'
+      summary: login as a user
+      tags:
+      - auth
+  /api/v1/auth/profile:
+    get:
+      description: get current user profile
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/helpers.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.Response'
+      security:
+      - Authentication: []
+      summary: get current user profile
+      tags:
+      - auth
+  /api/v1/users:
+    post:
+      consumes:
+      - application/json
+      description: create new user account with username,password and optional email,first
+        and last name
+      parameters:
+      - description: User Create
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.AuthenticationInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/helpers.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.Response'
+      summary: Create new user account
+      tags:
+      - user
+  /healthcheck:
+    get:
+      consumes:
+      - application/json
+      description: do health check
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: health check
+      tags:
+      - swagger
+securityDefinitions:
+  Authentication:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
