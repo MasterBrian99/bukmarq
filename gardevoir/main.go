@@ -35,9 +35,11 @@ func main() {
 	models.MigrateUsers()
 	models.MigrateWorkspace()
 	models.MigrateWorkspaceUser()
+	models.MigrateCollections()
 	controller.UsersController(r)
 	controller.AuthController(r)
 	controller.SwaggersController(r)
+	controller.WorkspaceController(r)
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",

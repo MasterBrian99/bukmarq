@@ -1,6 +1,7 @@
 import { useDisclosure } from '@mantine/hooks';
-import {AppShell, Burger, Divider, Group, ScrollArea, Skeleton, Text} from '@mantine/core';
+import { AppShell, Burger, Divider, Group, ScrollArea, Skeleton, Text } from '@mantine/core';
 import WorkspaceButton from '@/components/WorkspaceButton/WorkspaceButton.tsx';
+import CollectionItemSection from '@/layout/MainLayout/CollectionItemSection.tsx';
 
 export default function MainLayout() {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
@@ -23,19 +24,20 @@ export default function MainLayout() {
            <Text>logo</Text>
           </Group>
         </AppShell.Header>
-        <AppShell.Navbar >
+        <AppShell.Navbar>
           <AppShell.Section>
 
             <WorkspaceButton />
-            <Divider/>
+            <Divider />
           </AppShell.Section>
           <AppShell.Section p="md" grow my="md" component={ScrollArea}>
-            60 links in a scrollable section
-            {Array(60)
-                .fill(0)
-                .map((_, index) => (
-                    <Skeleton key={index} h={28} mt="sm" animate={false} />
-                ))}
+            {/*60 links in a scrollable section*/}
+            {/*{Array(60)*/}
+            {/*    .fill(0)*/}
+            {/*    .map((_, index) => (*/}
+            {/*        <Skeleton key={index} h={28} mt="sm" animate={false} />*/}
+            {/*    ))}*/}
+              <CollectionItemSection />
           </AppShell.Section>
           <AppShell.Section>Navbar footer – always at the bottom</AppShell.Section>
         </AppShell.Navbar>

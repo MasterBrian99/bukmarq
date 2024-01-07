@@ -1,8 +1,6 @@
-import { Button, Group, Menu, Modal, Textarea, TextInput } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { Button, Textarea, TextInput } from '@mantine/core';
 
 export default function WorkspaceCreate() {
-    const [opened, { open, close }] = useDisclosure(false);
     return (
         <>
                 <TextInput

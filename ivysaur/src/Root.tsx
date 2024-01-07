@@ -5,6 +5,7 @@ import '@mantine/notifications/styles.css';
 import { ComponentType, StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
 import { theme } from './theme/theme';
 
 const container = document.getElementById('root') as HTMLElement;
@@ -14,7 +15,9 @@ function render(App: ComponentType) {
   root.render(
     <StrictMode>
       <MantineProvider theme={theme}>
+          <ModalsProvider>
         <App />
+          </ModalsProvider>
       </MantineProvider>
     </StrictMode>
   );

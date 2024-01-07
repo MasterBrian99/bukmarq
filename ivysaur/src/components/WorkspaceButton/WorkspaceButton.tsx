@@ -1,16 +1,36 @@
-import { UnstyledButton, Group, Avatar, Text, rem, Menu, Title, ActionIcon, Modal, Box } from '@mantine/core';
+import { UnstyledButton, Group, Avatar, Text, rem, Menu, Title, ActionIcon, Modal, Box, Button, Textarea, TextInput } from '@mantine/core';
 // import { IconChevronRight } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
+import { modals } from '@mantine/modals';
 import { HiMiniChevronRight, TbDots } from '@/utils/icons';
 import classes from './WorkspaceButton.module.css';
 import WorkspaceCreate from '@/components/WorkspaceButton/WorkspaceCreate.tsx';
+import WorkspaceSetting from '@/components/WorkspaceButton/WorkspaceSetting.tsx';
 
 export default function WorkspaceButton() {
-    const [workspaceCreateOpened, { open, close }] = useDisclosure(false);
+    const openCreateWorkspaceModal = () =>
+        modals.open({
+            title: 'Create new workspace',
+            centered: true,
+            children: (
+               <>
+                  <WorkspaceCreate />
+               </>
+            ),
+        });
 
-    function openWorkspaceCreate() {
-        open();
-    }
+    const openWorkspaceSettingModal = () =>
+        modals.open({
+            size: 'xl',
+            title: 'Workspace settings',
+            centered: true,
+            children: (
+                <>
+                    <WorkspaceSetting />
+                </>
+            ),
+        });
+
     return (
    <>
        <Menu shadow="md" width="400">
@@ -66,19 +86,17 @@ export default function WorkspaceButton() {
                    </Group>
                </Menu.Item>
                <Menu.Divider />
-               <Menu.Item onClick={open}>
+               <Menu.Item onClick={openCreateWorkspaceModal}>
                    Create New Workspace
                </Menu.Item>
-               <Menu.Item onClick={openWorkspaceCreate}>
+               <Menu.Item onClick={openWorkspaceSettingModal}>
                    Current Workspace Settings
                </Menu.Item>
                <Menu.Divider />
 
            </Menu.Dropdown>
        </Menu>
-       <Modal opened={workspaceCreateOpened} onClose={close} title="Create new workspace">
-              <WorkspaceCreate />
-       </Modal>
+
    </>
     );
 }
