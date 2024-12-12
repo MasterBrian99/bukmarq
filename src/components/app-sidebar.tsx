@@ -5,11 +5,11 @@ import {
   Calendar,
   Command,
   Home,
-  Inbox,
+  LibraryBig,
   MessageCircleQuestion,
   Search,
   Settings2,
-  Sparkles,
+  Tags,
   Trash2
 } from 'lucide-react'
 
@@ -24,6 +24,7 @@ import {
   SidebarHeader,
   SidebarRail
 } from '@/components/ui/sidebar'
+import NavCollections from '@/app/layout/components/nav-collections'
 
 // This is sample data.
 const data = {
@@ -57,15 +58,15 @@ const data = {
       icon: Search
     },
     {
-      title: 'Ask AI',
+      title: 'Tags',
       url: '#',
-      icon: Sparkles
+      icon: Tags
     },
 
     {
-      title: 'Inbox',
+      title: 'Archive',
       url: '#',
-      icon: Inbox,
+      icon: LibraryBig,
       badge: '10'
     }
   ],
@@ -266,7 +267,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavFavorites favorites={data.favorites} />
-        <NavWorkspaces workspaces={data.workspaces} />
+        <NavCollections />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarRail />
